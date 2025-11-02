@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Project Information</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{% url 'home' %}" class="nav-logo">Project Portal</a>
+            <div class="nav-links">
+                <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
+                <a href="{% url 'projects' %}" class="nav-link {% if request.resolver_match.url_name == 'projects' %}active{% endif %}">Projects</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Upload Your Project Information</h1>
+        
+        <!-- Add New Person Form -->
+        <div class="form-card">
+            <h2>Project Information Form</h2>
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
+            <form method="post" class="personal-form">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group">
+                        {{ form.first_name.label_tag }}
+                        {{ form.first_name }}
+                        {% if form.first_name.errors %}
+                            <div class="error">{{ form.first_name.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.last_name.label_tag }}
+                        {{ form.last_name }}
+                        {% if form.last_name.errors %}
+                            <div class="error">{{ form.last_name.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        {{ form.group.label_tag }}
+                        {{ form.group }}
+                        {% if form.group.errors %}
+                            <div class="error">{{ form.group.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.email.label_tag }}
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="error">{{ form.email.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    {{ form.your_project_title.label_tag }}
+                    {{ form.your_project_title }}
+                    {% if form.your_project_title.errors %}
+                        <div class="error">{{ form.your_project_title.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    {{ form.your_colleagues_for_the_project.label_tag }}
+                    {{ form.your_colleagues_for_the_project }}
+                    {% if form.your_colleagues_for_the_project.errors %}
+                        <div class="error">{{ form.your_colleagues_for_the_project.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    {{ form.project_link.label_tag }}
+                    {{ form.project_link }}
+                    {% if form.project_link.errors %}
+                        <div class="error">{{ form.project_link.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group captcha-group">
+                    {{ form.captcha.label_tag }}
+                    {{ form.captcha }}
+                    {% if form.captcha.errors %}
+                        <div class="error">{{ form.captcha.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit Project Information</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

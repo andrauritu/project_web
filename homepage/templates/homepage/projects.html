@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Projects</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{% url 'home' %}" class="nav-logo">Project Portal</a>
+            <div class="nav-links">
+                <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
+                <a href="{% url 'projects' %}" class="nav-link {% if request.resolver_match.url_name == 'projects' %}active{% endif %}">Projects</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>All Projects</h1>
+        
+        {% if all_projects %}
+            <div class="projects-grid">
+                {% for project in all_projects %}
+                    <a href="{% url 'project_detail' project.id %}" class="project-card-link">
+                        <div class="project-card">
+                            <div class="project-header">
+                                <h2>{{ project.your_project_title }}</h2>
+                            </div>
+                            <div class="project-body">
+                                <div class="project-info">
+                                    <p class="project-author"><strong>Author:</strong> {{ project.first_name }} {{ project.last_name }}</p>
+                                    <p class="project-group"><strong>Group:</strong> {{ project.group }}</p>
+                                    {% if project.your_colleagues_for_the_project %}
+                                        <p class="project-colleagues"><strong>Colleagues:</strong> {{ project.your_colleagues_for_the_project|truncatewords:10 }}</p>
+                                    {% endif %}
+                                    <div class="project-preview-footer">
+                                        <span class="click-hint">Click to view details →</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-projects">
+                <div class="project-card">
+                    <p style="text-align: center; font-size: 1.2em; color: #666;">No projects found. <a href="{% url 'home' %}">Be the first to submit a project!</a></p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+

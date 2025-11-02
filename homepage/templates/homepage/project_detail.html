@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ project.your_project_title }} - Project Details</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{% url 'home' %}" class="nav-logo">Project Portal</a>
+            <div class="nav-links">
+                <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
+                <a href="{% url 'projects' %}" class="nav-link {% if request.resolver_match.url_name == 'projects' %}active{% endif %}">Projects</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="detail-header">
+            <a href="{% url 'projects' %}" class="back-link">← Back to Projects</a>
+            <h1>{{ project.your_project_title }}</h1>
+        </div>
+        
+        <div class="project-detail-card">
+            <div class="detail-section">
+                <h2>Project Information</h2>
+                <div class="detail-content">
+                    <div class="detail-item">
+                        <span class="detail-label">Project Title</span>
+                        <span class="detail-value">{{ project.your_project_title }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Uploaded by</span>
+                        <span class="detail-value">{{ project.first_name }} {{ project.last_name }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Group</span>
+                        <span class="detail-value">{{ project.group }}</span>
+                    </div>
+                    {% if project.your_colleagues_for_the_project %}
+                    <div class="detail-item">
+                        <span class="detail-label">Colleagues</span>
+                        <span class="detail-value">{{ project.your_colleagues_for_the_project }}</span>
+                    </div>
+                    {% endif %}
+                    {% if project.project_link %}
+                    <div class="detail-item">
+                        <span class="detail-label">Project Link</span>
+                        <span class="detail-value"><a href="{{ project.project_link }}" target="_blank" rel="noopener noreferrer">{{ project.project_link }}</a></span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h2>Contact Information</h2>
+                <div class="detail-content">
+                    <div class="detail-item">
+                        <span class="detail-label">Email</span>
+                        <span class="detail-value"><a href="mailto:{{ project.email }}">{{ project.email }}</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
